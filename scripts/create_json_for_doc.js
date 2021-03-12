@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require("path");
 
-var input_path = path.join(__dirname, "../files/input/template_app.json");
+var input_path = path.join(__dirname, "../files/input_jsons/template_app.json");
 var json_string = fs.readFileSync(input_path).toString();
 var sheet_obj = JSON.parse(json_string);
 
