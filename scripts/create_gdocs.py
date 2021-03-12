@@ -45,6 +45,7 @@ def main():
     files_IDs = {}
     files_urls = {}
     
+    path_image = 'https://media.githubusercontent.com/media/IDEMSInternational/parenting-app-ui/master/src/assets/plh_assets/'
     
     # create external folder
     file_metadata = {
@@ -63,16 +64,30 @@ def main():
     
     # functions to create google docs
     def insert_text(text, style, first = False):
-        requests = [
-            {
-                'insertText': {
-                    'location': {
-                        'index': 1,
-                    },
-                    'text': text if first else "\n"+text
+        if text.endswith(".svg"):
+            requests = [
+                {
+                    'insertText': {
+                        'location': {
+                            'index': 1,
+                        },
+                        'text': path_image + text if first else "\n"+path_image + text
+                    }
                 }
-            }
-        ]
+            ]
+        else:
+            requests = [
+                {
+                    'insertText': {
+                        'location': {
+                            'index': 1,
+                        },
+                        'text': text if first else "\n"+text
+                    }
+                }
+            ]
+            
+        
         if style:
             requests.append(
                 {
