@@ -1,0 +1,434 @@
+[
+{
+    "flow_type": "template",
+    "flow_name": "w_example_stepper",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "workshop_stepper",
+        "value": "workshop_stepper",
+        "rows": [
+          {
+            "type": "nested_properties",
+            "name": "nav_group",
+            "hidden": "!@fields.do_workshops_together",
+            "rows": [
+              {
+                "type": "template",
+                "value": "w_example_welcome_together",
+                "rows": [],
+                "name": "w_example_welcome_together"
+              },
+              {
+                "type": "template",
+                "value": "w_example_read",
+                "parameter_list": [
+                  "theme:active"
+                ],
+                "rows": [],
+                "name": "w_example_read"
+              },
+              {
+                "type": "template",
+                "value": "w_example_talk_together",
+                "parameter_list": [
+                  "theme:active"
+                ],
+                "rows": [],
+                "name": "w_example_talk_together"
+              },
+              {
+                "type": "template",
+                "value": "w_example_tools_activity",
+                "parameter_list": [
+                  "theme:active"
+                ],
+                "rows": [],
+                "name": "w_example_tools_activity"
+              },
+              {
+                "type": "template",
+                "value": "w_example_ending",
+                "rows": [],
+                "name": "w_example_ending"
+              }
+            ]
+          },
+          {
+            "type": "nested_properties",
+            "name": "nav_group",
+            "hidden": "@fields.do_workshops_together",
+            "rows": [
+              {
+                "type": "template",
+                "value": "w_example_welcome_individual",
+                "rows": [],
+                "name": "w_example_welcome_individual"
+              },
+              {
+                "type": "template",
+                "value": "w_example_read",
+                "parameter_list": [
+                  "theme:active"
+                ],
+                "rows": [],
+                "name": "w_example_read"
+              },
+              {
+                "type": "template",
+                "value": "w_example_question_time",
+                "parameter_list": [
+                  "theme:active"
+                ],
+                "rows": [],
+                "name": "w_example_question_time"
+              },
+              {
+                "type": "template",
+                "value": "w_example_tools_activity",
+                "parameter_list": [
+                  "theme:active"
+                ],
+                "rows": [],
+                "name": "w_example_tools_activity"
+              },
+              {
+                "type": "template",
+                "value": "w_example_ending",
+                "rows": [],
+                "name": "w_example_ending"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_welcome_together",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "welcome_together",
+        "value": "welcome_together",
+        "rows": [
+          {
+            "type": "nested_properties",
+            "name": "watch",
+            "rows": [
+              {
+                "type": "nested_properties",
+                "name": "workshop_activity",
+                "rows": [
+                  {
+                    "name": "intro_text",
+                    "value": "This is the introduction text of the welcome together.",
+                    "type": "set_variable"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_read",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "read",
+        "value": "read",
+        "rows": [
+          {
+            "name": "number_of_slides",
+            "value": 3,
+            "type": "set_variable"
+          },
+          {
+            "name": "slide_image_src_1",
+            "value": "plh_images/modules/mod_instruct/thought_experiment/te_1.svg",
+            "type": "set_variable"
+          },
+          {
+            "name": "slide_text_1",
+            "value": "This is the text on the first slide.",
+            "type": "set_variable"
+          },
+          {
+            "name": "slide_image_src_2",
+            "value": "plh_images/modules/mod_instruct/thought_experiment/te_2.svg",
+            "type": "set_variable"
+          },
+          {
+            "name": "slide_text_2",
+            "value": "This is the text on the second slide.",
+            "type": "set_variable"
+          },
+          {
+            "name": "slide_image_src_3",
+            "value": "plh_images/modules/mod_instruct/thought_experiment/te_3.svg",
+            "type": "set_variable"
+          },
+          {
+            "name": "slide_text_3",
+            "value": "This is the text on the third slide.",
+            "type": "set_variable"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_talk_together",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "talk_together",
+        "value": "talk_together",
+        "rows": [
+          {
+            "name": "discussion_text",
+            "value": "This text describes what should be discussed.",
+            "type": "set_variable"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_question_time",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "value": "question_time",
+        "rows": [
+          {
+            "name": "text_1",
+            "value": "This is some text.",
+            "type": "set_variable"
+          },
+          {
+            "name": "question_text_1",
+            "value": "This is the first question.",
+            "type": "set_variable"
+          },
+          {
+            "name": "answer_list_1",
+            "value": "First combo box answer; Second combo box answer",
+            "type": "set_variable"
+          },
+          {
+            "name": "user_input_1",
+            "value": false,
+            "type": "set_variable"
+          },
+          {
+            "name": "reply_1",
+            "value": "This text shows up when you've selected an answer.",
+            "type": "set_variable"
+          },
+          {
+            "name": "text_2",
+            "value": "This is some text.",
+            "type": "set_variable"
+          },
+          {
+            "name": "question_text_2",
+            "value": "This is the second question.",
+            "type": "set_variable"
+          },
+          {
+            "name": "answer_list_2",
+            "value": "name:answer_1 | text: First answer; name:answer_2 | text:Second answer",
+            "type": "set_variable"
+          },
+          {
+            "name": "user_input_2",
+            "value": true,
+            "type": "set_variable"
+          },
+          {
+            "name": "reply_2",
+            "value": "This text shows up when you've selected or typed an answer.",
+            "type": "set_variable"
+          }
+        ],
+        "name": "question_time"
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_tools",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "tools_component",
+        "value": "tools_component",
+        "rows": [
+          {
+            "type": "title",
+            "name": "tools_title",
+            "value": "Example Workshop"
+          },
+          {
+            "type": "nested_properties",
+            "name": "tool_1",
+            "rows": [
+              {
+                "name": "title",
+                "value": "First tool",
+                "type": "set_variable"
+              },
+              {
+                "name": "text_1",
+                "value": "Text describing the first tool.",
+                "type": "set_variable"
+              },
+              {
+                "name": "button",
+                "value": "Button",
+                "hidden": false,
+                "type": "set_variable"
+              }
+            ]
+          },
+          {
+            "type": "nested_properties",
+            "name": "tool_2",
+            "rows": [
+              {
+                "name": "title",
+                "value": "Second tool",
+                "type": "set_variable"
+              },
+              {
+                "name": "subtitle_1",
+                "value": "Subtitle 1",
+                "hidden": false,
+                "type": "set_variable"
+              },
+              {
+                "name": "text_1",
+                "value": "Some text.",
+                "type": "set_variable"
+              },
+              {
+                "name": "subtitle_2",
+                "value": "Subtitle 2",
+                "hidden": false,
+                "type": "set_variable"
+              },
+              {
+                "name": "text_2",
+                "value": "More text.",
+                "hidden": false,
+                "type": "set_variable"
+              }
+            ]
+          },
+          {
+            "type": "nested_properties",
+            "name": "tool_3",
+            "rows": [
+              {
+                "name": "title",
+                "value": "Third tool",
+                "type": "set_variable"
+              },
+              {
+                "name": "text_1",
+                "value": "Text describing the third tool.",
+                "type": "set_variable"
+              },
+              {
+                "name": "image",
+                "value": "plh_images/modules/mod_instruct/thought_experiment/te_1.svg",
+                "hidden": false,
+                "type": "set_variable"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_tools_activity",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "tools_activity",
+        "value": "tools_activity",
+        "rows": [
+          {
+            "type": "nested_properties",
+            "name": "workshop_activity",
+            "rows": [
+              {
+                "type": "nested_properties",
+                "name": "content_box",
+                "value": "w_example_tools_activity",
+                "rows": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_ending",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "ending",
+        "value": "ending",
+        "rows": []
+      }
+    ]
+  },
+  {
+    "flow_type": "template",
+    "flow_name": "w_example_welcome_individual",
+    "status": "released",
+    "rows": [
+      {
+        "type": "template",
+        "name": "welcome_individual",
+        "value": "welcome_individual",
+        "rows": [
+            {
+                "name": "reply_happy",
+                "value": "This text appears when selecting the happy emoji."
+            },
+            {
+                "name": "reply_ok",
+                "value": "This text appears when selecting the ok emoji."
+            },
+            {
+                "name": "reply_sad",
+                "value": "This text appears when selecting the sad emoji."
+            }
+        ]
+      }
+    ]
+}
+  ]
+  
