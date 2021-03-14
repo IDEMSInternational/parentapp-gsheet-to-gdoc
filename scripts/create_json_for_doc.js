@@ -1,13 +1,14 @@
 var fs = require('fs');
 var path = require("path");
 
-var input_path = path.join(__dirname, "../files/input_jsons/template_app.json");
+var input_path = path.join(__dirname, "../files/input_jsons/all-templates.json");
 var json_string = fs.readFileSync(input_path).toString();
 var sheet_obj = JSON.parse(json_string);
+var include_sheets = ["w_1on1_stepper", "w_1on1_welcome_together", "w_1on1_care_together", "w_1on1_relax", "w_1on1_intro", "w_1on1_talk", "w_1on1_tools_activity", "w_1on1_home_practice", "w_1on1_ending"];
 
 var doc_obj = {};
-
-sheet_obj.forEach(sheet => {
+var sheet_obj_subset = sheet_obj.filter(sheet => (include_sheets.includes(sheet.flow_name)))
+sheet_obj_subset.forEach(sheet => {
     var sheet_content = sheet.rows;
     var new_obj = {};
     create_nested_json(sheet_content,new_obj,{},"",1);

@@ -1,0 +1,66 @@
+{
+  "w_1on1_stepper": {
+    "workshop_stepper": {}
+  },
+  "w_1on1_welcome_together": {
+    "welcome_together": "welcome_together"
+  },
+  "w_1on1_care_together": {
+    "care_together": "care_together"
+  },
+  "w_1on1_relax": {
+    "relax": {
+      "workshop_activity": {}
+    }
+  },
+  "w_1on1_intro": {
+    "listen": {
+      "audio_src": "plh_audio/sample.mp3",
+      "workshop_activity": {
+        "activity_title": "Why @global.w_1on1?",
+        "intro_text": "This week is about spending one-on-one time with your teen.",
+        "content_box": {
+          "text": "Being a parent can be so hard. Sometimes it feels like our children never listen to us.\n\nBut science shows that spending just a few minutes each day of focused one-on-one time with your teen helps build trust and love.\n\nIt’s a time when you focus on them, without TV or phones. Let them lead what you do or talk about."
+        }
+      }
+    }
+  },
+  "w_1on1_talk": {
+    "talk_together": {
+      "workshop_activity": {
+        "include_outro": "true",
+        "content_box": {
+          "text": "Talk together about ways to spend one-on-one time with your teen.\n\nFeel like you have NO TIME and you are exhausted? Remember to also think of ways that don't take up extra time.",
+          "nav_buttons": {
+            "button_info": "Examples",
+            "button_completed": "Finish"
+          }
+        },
+        "outro_text": "It may not have instant results, but it will make a difference over the long term. You are an amazing parent for trying this.",
+        "outro_habit_text": "Every time you do one-on-one time, mark your @global.parent_point to track your success"
+      }
+    }
+  },
+  "w_1on1_tools_activity": {
+    "tools_activity": {
+      "workshop_activity": {
+        "content_box": "w_1on1_tools"
+      }
+    }
+  },
+  "w_1on1_home_practice": {
+    "home_practice": {
+      "workshop_activity": {
+        "content_box": {
+          "text_1": "This week, can you try 5 minutes of one-on-one time with your teen every day that you can?",
+          "button_1": "Examples",
+          "button_2": "Essential Tools",
+          "habit_text": "Every time you do one-on-one time, mark your @global.parent_point to track your success"
+        }
+      }
+    }
+  },
+  "w_1on1_ending": {
+    "ending": "ending"
+  }
+}
