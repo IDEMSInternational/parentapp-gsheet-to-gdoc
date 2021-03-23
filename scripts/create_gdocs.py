@@ -123,20 +123,44 @@ def main():
 #                    requests.append(req)
 
 
+    # def make_requests(key, value, level, requests):
+    #     next_level = min(level+1,6)
+    #     requests.append(insert_text(text = key, style = 'HEADING_' + str(level)))
+    #     if isinstance(value, str):
+    #         req = insert_text(text = value, style = '')
+    #         requests.append(req)
+    #     elif isinstance(value, dict):
+    #         for i in value:
+    #             make_requests(i, value[i], level = next_level, requests = requests)
+    #     elif isinstance(value, list):
+    #         for item in value:
+    #             if isinstance(item, dict):
+    #                 for i in item:
+    #                     make_requests(i, item[i], level = next_level, requests = requests)
+    #             elif isinstance(item, str):
+    #                 req = insert_text(text = item, style = '')
+    #                 requests.append(req)
+
+    #     requests
     def make_requests(key, value, level, requests):
-        next_level = min(level+1,6)
-        requests.append(insert_text(text = key, style = 'HEADING_' + str(level)))
+        lev_for_heading = min(level,6)
+        if lev_for_heading == level:
+            heading_text = key
+        else:
+            heading_text = '###section_' + str(level) + ' ' + key
+
+        requests.append(insert_text(text = heading_text, style = 'HEADING_' + str(lev_for_heading)))
         if isinstance(value, str):
             req = insert_text(text = value, style = '')
             requests.append(req)
         elif isinstance(value, dict):
             for i in value:
-                make_requests(i, value[i], level = next_level, requests = requests)
+                make_requests(i, value[i], level = level + 1, requests = requests)
         elif isinstance(value, list):
             for item in value:
                 if isinstance(item, dict):
                     for i in item:
-                        make_requests(i, item[i], level = next_level, requests = requests)
+                        make_requests(i, item[i], level = level + 1, requests = requests)
                 elif isinstance(item, str):
                     req = insert_text(text = item, style = '')
                     requests.append(req)
