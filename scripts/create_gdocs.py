@@ -105,19 +105,38 @@ def main():
             )
         return requests
 
+ #   def make_requests(key, value, level, requests):
+ #       requests.append(insert_text(text = key, style = 'HEADING_' + str(level)))
+ #       if isinstance(value, str):
+ #           req = insert_text(text = value, style = '')
+ #           requests.append(req)
+ #       elif isinstance(value, dict):
+ #           for i in value:
+ #               make_requests(i, value[i], level = level + 1, requests = requests)
+#        elif isinstance(value, list):
+#            for item in value:
+#                if isinstance(item, dict):
+#                    for i in item:
+#                        make_requests(i, item[i], level = level + 1, requests = requests)
+#                elif isinstance(item, str):
+#                    req = insert_text(text = item, style = '')
+#                    requests.append(req)
+
+
     def make_requests(key, value, level, requests):
+        next_level = min(level+1,6)
         requests.append(insert_text(text = key, style = 'HEADING_' + str(level)))
         if isinstance(value, str):
             req = insert_text(text = value, style = '')
             requests.append(req)
         elif isinstance(value, dict):
             for i in value:
-                make_requests(i, value[i], level = level + 1, requests = requests)
+                make_requests(i, value[i], level = next_level, requests = requests)
         elif isinstance(value, list):
             for item in value:
                 if isinstance(item, dict):
                     for i in item:
-                        make_requests(i, item[i], level = level + 1, requests = requests)
+                        make_requests(i, item[i], level = next_level, requests = requests)
                 elif isinstance(item, str):
                     req = insert_text(text = item, style = '')
                     requests.append(req)

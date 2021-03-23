@@ -1,66 +1,183 @@
 {
-  "w_1on1_stepper": {
-    "workshop_stepper": {}
-  },
-  "w_1on1_welcome_together": {
-    "welcome_together": "welcome_together"
-  },
-  "w_1on1_care_together": {
-    "care_together": "care_together"
-  },
-  "w_1on1_relax": {
-    "relax": {
-      "workshop_activity": {}
+  "w_instruct_stepper": {
+    "workshop_stepper": {
+      "nav_template_list": "w_instruct_welcome_individual; w_instruct_intro; w_instruct_think; w_instruct_read_1; w_instruct_read_2; w_instruct_tools_activity; w_instruct_home_practice; w_instruct_ending"
     }
   },
-  "w_1on1_intro": {
+  "w_instruct_welcome_together": {
+    "welcome_together": "welcome_together"
+  },
+  "w_instruct_care_together": {
+    "care_together": "care_together"
+  },
+  "w_instruct_review_together": {
+    "review_together": {
+      "workshop_activity": {
+        "outro_text": "You can use the top 8 challenges and solutions that parents have with praise."
+      }
+    }
+  },
+  "w_instruct_relax": {
+    "relax": {
+      "workshop_activity": {
+        "intro_text": "Let’s slow down for a moment together."
+      }
+    }
+  },
+  "w_instruct_intro": {
     "listen": {
       "audio_src": "plh_audio/sample.mp3",
       "workshop_activity": {
-        "activity_title": "Why @global.w_1on1?",
-        "intro_text": "This week is about spending one-on-one time with your teen.",
+        "activity_title": "@global.w_instruct",
+        "intro_text": "This week is about positive instructions."
+      }
+    }
+  },
+  "w_instruct_think_1": {
+    "think": {
+      "workshop_activity": {
+        "intro_text": "It's time for a thought experiment!",
         "content_box": {
-          "text": "Being a parent can be so hard. Sometimes it feels like our children never listen to us.\n\nBut science shows that spending just a few minutes each day of focused one-on-one time with your teen helps build trust and love.\n\nIt’s a time when you focus on them, without TV or phones. Let them lead what you do or talk about."
+          "box_1": {
+            "image_src": "plh_images/workshops/instruct/guide_2/teen_phone_2.svg",
+            "text": "@global.guide_2_name: \"Stop making so much noise!\" \n@global.guide_teen_name: \"I hate you!\""
+          },
+          "box_2": {
+            "box_1": {
+              "image_src": "plh_images/workshops/instruct/guide_2/teen_phone_1.svg",
+              "text": "It is so hard to tell teenagers what to do! What really helped me was to change how to ask my teen to do things. Now, I tell them what they should do instead of what they shouldn’t. Let me show you how it works!"
+            },
+            "box_2": {
+              "box_1": {
+                "image_src": "plh_images/workshops/instruct/guide_2/think/slide_1.svg",
+                "text": "DO NOT THINK ABOUT AN ELEPHANT \n\nWhat are you thinking about?"
+              },
+              "box_2": {
+                "box_1": {
+                  "image_src": "plh_images/workshops/instruct/guide_2/think/slide_2.svg",
+                  "text": "‘Don’t do’ instructions make teens think about that thing. Sometimes they don’t understand what we do want from them. Also often they hate being told not to do things (don’t we all?)"
+                },
+                "box_2": {
+                  "box_1": {
+                    "image_src": "plh_images/workshops/instruct/guide_2/think/slide_1.svg",
+                    "text": "THINK ABOUT A FURRY TIGER, THANK YOU! \n\nWhat are you thinking about?"
+                  },
+                  "box_2": {
+                    "image_src": "plh_images/workshops/instruct/guide_2/think/slide_3.svg",
+                    "text": "Positive, clear instructions help teens focus on what they should be doing. They also feel more respectful to a teenager."
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
   },
-  "w_1on1_talk": {
+  "w_instruct_read_1": {
+    "read": {
+      "workshop_activity": {
+        "intro_text": "This happened with @global.w_instruct_teen_girl and her @global.w_instruct_female_caregiver the other day: ",
+        "content_box": {
+          "box_1": {
+            "image_src": "plh_images/workshops/instruct/read_1/slide_1.svg",
+            "text": "@global.w_instruct_female_caregiver was cleaning the house while @global.w_instruct_teen_girl was with her friends practicing dance moves.\n\n@global.w_instruct_female_caregiver: “Don’t make such a mess while I am cleaning the house. You are in the way!”"
+          },
+          "box_2": {
+            "box_1": {
+              "image_src": "plh_images/workshops/instruct/read_1/slide_2.svg",
+              "text": "@global.w_instruct_teen_girl: “But I need to practice for the school competition. You never let me do anything.”\n\n@global.w_instruct_female_caregiver: “Don’t you talk back to me!”"
+            },
+            "box_2": {
+              "image_src": "plh_images/workshops/instruct/read_1/slide_3.svg",
+              "text": "@global.w_instruct_teen_girl: “Arrg!! Why am I being yelled at all the time????.”\n\n(inside) @global.w_instruct_female_caregiver to herself: “That child is always making trouble.”"
+            }
+          }
+        }
+      }
+    }
+  },
+  "w_instruct_talk_1": {
     "talk_together": {
       "workshop_activity": {
-        "include_outro": "true",
+        "intro_text": "Let's discuss what happened in this story.",
         "content_box": {
-          "text": "Talk together about ways to spend one-on-one time with your teen.\n\nFeel like you have NO TIME and you are exhausted? Remember to also think of ways that don't take up extra time.",
+          "text": "How do you think @global.w_instruct_teen_girl felt about the way @global.w_instruct_female_caregiver responded?  \n\nWhat could @global.w_instruct_female_caregiver have done differently? "
+        }
+      }
+    }
+  },
+  "w_instruct_read_2": {
+    "read": {
+      "workshop_activity": {
+        "intro_text": "Thank you for thinking along! Let’s go back in time and see what happens!",
+        "content_box": {
+          "box_1": {
+            "image_src": "plh_images/workshops/instruct/read_2/slide_1.svg",
+            "text": "@global.w_instruct_female_caregiver was cleaning the house while @global.w_instruct_teen_girl was with her friends practicing dance moves.  \n\n@global.w_instruct_female_caregiver: “@global.w_instruct_teen_girl, it is nice to see you practicing your dance moves with your friends. Please take it outside so I can finish cleaning the house. Afterwards, you can show me your dance.\"\n\n@global.w_instruct_teen_girl: “Okay, @global.w_instruct_female_caregiver!”"
+          },
+          "box_2": {
+            "box_1": {
+              "image_src": "plh_images/workshops/instruct/read_2/slide_2.svg"
+            },
+            "box_2": {
+              "box_1": {
+                "image_src": "plh_images/workshops/instruct/read_2/slide_3.svg",
+                "text": "@fields.w_instruct_female_caregiver: \"Thank you for practicing outside while I finished cleaning the house, @fields.w_instruct_teen_girl . Now I have some time to watch your dance.\""
+              },
+              "box_2": {
+                "image_src": "plh_images/workshops/instruct/read_2/slide_4.svg",
+                "text": "@fields.w_instruct_female_caregiver: \"Wow, @fields.w_instruct_teen_girl! You have such good dance moves!\""
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "w_instruct_talk_2": {
+    "talk_together": {
+      "workshop_activity": {
+        "intro_text": "Let's discuss what happened this time.",
+        "content_box": {
+          "text": "Why do you think it worked better for @global.w_instruct_female_caregiver this time? \n\nWhat do you think worked well? "
+        }
+      }
+    }
+  },
+  "w_instruct_tools_activity": {
+    "tools_activity": {
+      "workshop_activity": {
+        "content_box": "w_instruct_tools"
+      }
+    }
+  },
+  "w_instruct_talk_3": {
+    "talk_together": {
+      "workshop_activity": {
+        "intro_text": "Let's practice giving REAL, POSITIVE and CLEAR instructions. ",
+        "content_box": {
+          "text": "Try giving positive instructions to each other! And give each other encouragement and praise – you deserve it.\n\n",
           "nav_buttons": {
             "button_info": "Examples",
             "button_completed": "Finish"
           }
-        },
-        "outro_text": "It may not have instant results, but it will make a difference over the long term. You are an amazing parent for trying this.",
-        "outro_habit_text": "Every time you do one-on-one time, mark your @global.parent_point to track your success"
-      }
-    }
-  },
-  "w_1on1_tools_activity": {
-    "tools_activity": {
-      "workshop_activity": {
-        "content_box": "w_1on1_tools"
-      }
-    }
-  },
-  "w_1on1_home_practice": {
-    "home_practice": {
-      "workshop_activity": {
-        "content_box": {
-          "text_1": "This week, can you try 5 minutes of one-on-one time with your teen every day that you can?",
-          "button_1": "Examples",
-          "button_2": "Essential Tools",
-          "habit_text": "Every time you do one-on-one time, mark your @global.parent_point to track your success"
         }
       }
     }
   },
-  "w_1on1_ending": {
+  "w_instruct_home_practice": {
+    "home_practice": {
+      "workshop_activity": {
+        "content_box": {
+          "text_1": "This week's home practice is to give your teen positive instructions.\n\nRemember – GET REAL, GET POSITIVE, GET CLEAR = GET EXACTLY WHAT YOU WANT (as much as is possible with a teenager!) ",
+          "button_1": "Examples",
+          "button_2": "@global.essential_tools"
+        }
+      }
+    }
+  },
+  "w_instruct_ending": {
     "ending": "ending"
   }
 }

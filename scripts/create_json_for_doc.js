@@ -4,7 +4,7 @@ var path = require("path");
 var input_path = path.join(__dirname, "../files/input_jsons/all-templates.json");
 var json_string = fs.readFileSync(input_path).toString();
 var sheet_obj = JSON.parse(json_string);
-var include_sheets = ["w_1on1_stepper", "w_1on1_welcome_together", "w_1on1_care_together", "w_1on1_relax", "w_1on1_intro", "w_1on1_talk", "w_1on1_tools_activity", "w_1on1_home_practice", "w_1on1_ending"];
+var include_sheets = ["w_instruct_stepper","w_instruct_welcome_together", "w_instruct_care_together", "w_instruct_relax", "w_instruct_review_together", "w_instruct_intro", "w_instruct_think_1", "w_instruct_read_1", "w_instruct_talk_1", "w_instruct_read_2", "w_instruct_talk_2", "w_instruct_tools_activity", "w_instruct_talk_3", "w_instruct_home_practice", "w_instruct_ending"];
 
 var doc_obj = {};
 var sheet_obj_subset = sheet_obj.filter(sheet => (include_sheets.includes(sheet.flow_name)))
