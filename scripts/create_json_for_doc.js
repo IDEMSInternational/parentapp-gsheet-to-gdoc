@@ -4,7 +4,39 @@ var path = require("path");
 var input_path = path.join(__dirname, "../files/input_jsons/all-templates.json");
 var json_string = fs.readFileSync(input_path).toString();
 var sheet_obj = JSON.parse(json_string);
-var include_sheets = ["w_instruct_stepper","w_instruct_welcome_together", "w_instruct_care_together", "w_instruct_relax", "w_instruct_review_together", "w_instruct_intro", "w_instruct_think_1", "w_instruct_read_1", "w_instruct_talk_1", "w_instruct_read_2", "w_instruct_talk_2", "w_instruct_tools_activity", "w_instruct_talk_3", "w_instruct_home_practice", "w_instruct_ending"];
+
+
+
+var workshop_names = ["1on1","instruct",];
+
+workshop_names.forEach(workshop_name =>{
+
+let include_sheets = [];
+
+var curr_stepper_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == "w_" + workshop_name + "_stepper"));
+if (curr_stepper_sheet.length ==0){
+    error("no stepper sheet for " + workshop_name)
+}else{
+    curr_stepper_sheet = curr_stepper_sheet[0];
+}
+var stepper_rows = curr_stepper_sheet.rows.filter(row => row.value == "workshop_stepper");
+stepper_rows.forEach(s_row =>{
+    let nav_row = s_row.rows.filter(row => (row.name == "nav_template_list"));
+    if (nav_row.length != 1){
+        error("no nav template list for " + workshop_name)
+    }else{
+        nav_row = nav_row[0];
+    }
+    include_sheets.push("w_" + workshop_name +"_stepper");
+    let nav_list = nav_row.value.split(";");
+    nav_list.forEach(w_name => {
+        let tidy_name = w_name.substring(w_name.indexOf('w_'+ workshop_name + "_"));
+        include_sheets.push(tidy_name);    
+    }); 
+    include_sheets.push("w_" + workshop_name +"_tools");
+});
+
+
 
 var doc_obj = {};
 var sheet_obj_subset = sheet_obj.filter(sheet => (include_sheets.includes(sheet.flow_name)))
@@ -17,17 +49,17 @@ sheet_obj_subset.forEach(sheet => {
 });
 
 
-
+console.log(include_sheets)
 
 
 // write output
 doc_obj = JSON.stringify(doc_obj, null, 2);
-var output_path = path.join(__dirname, "../files/jsons_for_docs/file_for_doc.json");
+var output_path = path.join(__dirname, "../files/jsons_for_docs/" + workshop_name + "_file_for_doc.json");
 fs.writeFile(output_path, doc_obj, function (err, result) {
     if (err) console.log('error', err);
 });
 
-
+});
 
 //////////////////////////////////////////////////////////////////////////
 function create_nested_json(curr_row_list,curr_dict,prev_dict,prev_key,lev){
@@ -42,6 +74,7 @@ function create_nested_json(curr_row_list,curr_dict,prev_dict,prev_key,lev){
         
 
     }
+
 
 
 }
