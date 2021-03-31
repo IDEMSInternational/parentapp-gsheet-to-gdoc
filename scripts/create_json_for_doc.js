@@ -19,14 +19,11 @@ titles_obj.rows.forEach(title =>{
         workshop_names.push(title.name)
     }
 
-});
-
-   //&& !title.name.includes("stress") && !title.name.includes("money") 
-//console.log(workshop_names)
-//workshop_names = ["w_consequence"]//, "w_instruct", "w_praise", "w_self_care","w_stress"];
-
+})
+//workshop_names = ["w_1on1"]
 
 workshop_names.forEach(workshop_name =>{
+    console.log(workshop_name)
 
     let include_sheets = [];
     var curr_stepper_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == workshop_name + "_stepper"));
@@ -35,22 +32,35 @@ workshop_names.forEach(workshop_name =>{
     }else{
         curr_stepper_sheet = curr_stepper_sheet[0];
         var stepper_rows = curr_stepper_sheet.rows.filter(row => row.value == "workshop_stepper");
+        
         stepper_rows.forEach(s_row =>{
             var local_include_sheets = []
             let nav_row = s_row.rows.filter(row => (row.name == "nav_template_list"));
+            
             if (nav_row.length != 1){
                 console.log("no nav template list for " + workshop_name)
             }else{
                 nav_row = nav_row[0];
+                
                 if (nav_row.hasOwnProperty("value")){
                     include_sheets.push(workshop_name +"_stepper");
                     local_include_sheets.push(workshop_name +"_stepper");
+                    
+                    /*
                     let nav_list = nav_row.value.split(";");
                     nav_list.forEach(w_name => {
                         let tidy_name = w_name.substring(w_name.indexOf( workshop_name + "_"));
                         include_sheets.push(tidy_name); 
                         local_include_sheets.push(tidy_name);    
                     }); 
+                    */
+                    let nav_list = nav_row.value;
+                    nav_list.forEach(w_name => {
+                        include_sheets.push(w_name); 
+                        local_include_sheets.push(w_name);    
+                    }); 
+
+
                     include_sheets.push(workshop_name +"_tools");
                     local_include_sheets.push(workshop_name +"_tools");
                     //replace navigation list
