@@ -9,7 +9,7 @@ var input_path_names = path.join(__dirname, "../files/input_jsons/all-globals.js
 var json_string_names = fs.readFileSync(input_path_names).toString();
 var names_obj = JSON.parse(json_string_names);
 
-// this is an example change
+
 
 var workshop_names = [];
 var titles_obj = names_obj.filter(fl =>(fl.flow_name == "workshop_titles"))[0];
@@ -104,8 +104,8 @@ workshop_names.forEach(workshop_name =>{
     
         
         
-// change to push to new dev branch        
-        
+
+
 
             
             
