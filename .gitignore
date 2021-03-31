@@ -1,3 +1,5 @@
 scripts/node_modules
 scripts/credentials.json
 scripts/token.pickle
+files/jsons_for_docs
+files/output

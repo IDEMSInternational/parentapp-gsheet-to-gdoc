@@ -45,7 +45,7 @@ def main():
     files_IDs = {}
     files_urls = {}
     
-    path_image = 'https://media.githubusercontent.com/media/IDEMSInternational/parenting-app-ui/master/src/assets/plh_assets/'
+    path_image = 'https://github.com/IDEMSInternational/parenting-app-ui/blob/master/src/assets/plh_assets/' #'https://media.githubusercontent.com/media/IDEMSInternational/parenting-app-ui/master/src/assets/plh_assets/'
     
     # create external folder
     file_metadata = {
@@ -65,14 +65,27 @@ def main():
     # functions to create google docs
     def insert_text(text, style, first = False):
         if text.endswith(".svg"):
-            requests = [
+            svg_url = path_image + text
+            requests = [         
                 {
                     'insertText': {
                         'location': {
                             'index': 1,
                         },
-                        'text': path_image + text if first else "\n"+path_image + text
+                        'text': svg_url if first else "\n"+ svg_url
                     }
+                },
+                {"updateTextStyle":{
+                        "textStyle": {
+                            "link": {"url": svg_url}
+                        },
+                        "fields": "link",
+                        "range": {
+                            "startIndex": 1,
+                            "endIndex": len(svg_url)+2,
+                        }
+                    }
+
                 }
             ]
         else:
@@ -105,38 +118,43 @@ def main():
             )
         return requests
 
- #   def make_requests(key, value, level, requests):
- #       requests.append(insert_text(text = key, style = 'HEADING_' + str(level)))
- #       if isinstance(value, str):
- #           req = insert_text(text = value, style = '')
- #           requests.append(req)
- #       elif isinstance(value, dict):
- #           for i in value:
- #               make_requests(i, value[i], level = level + 1, requests = requests)
-#        elif isinstance(value, list):
-#            for item in value:
-#                if isinstance(item, dict):
-#                    for i in item:
-#                        make_requests(i, item[i], level = level + 1, requests = requests)
-#                elif isinstance(item, str):
-#                    req = insert_text(text = item, style = '')
-#                    requests.append(req)
-
 
     def make_requests(key, value, level, requests):
-        next_level = min(level+1,6)
-        requests.append(insert_text(text = key, style = 'HEADING_' + str(level)))
+        lev_for_heading = min(level,6)
+        if level == 1:
+            flow_name_words = key.replace("w_" + title + "_","").split("_")
+            heading_text = ""
+
+            for name in flow_name_words:
+                heading_text = heading_text + name.capitalize() + " "
+            
+            slice_obj = slice(0, -1)
+            heading_text = heading_text[slice_obj]
+            if heading_text == "Stepper":
+                heading_text = "Workshop: " + title.capitalize()
+    
+            
+            heading_1_dict[heading_text] = {}
+            heading_1_dict[heading_text]["key"] = key
+
+            
+        elif lev_for_heading == level:
+            heading_text = key
+        else:
+            heading_text = '###section_' + str(level) + ' ' + key
+
+        requests.append(insert_text(text = heading_text, style = 'HEADING_' + str(lev_for_heading)))
         if isinstance(value, str):
             req = insert_text(text = value, style = '')
             requests.append(req)
         elif isinstance(value, dict):
             for i in value:
-                make_requests(i, value[i], level = next_level, requests = requests)
+                make_requests(i, value[i], level = level + 1, requests = requests)
         elif isinstance(value, list):
             for item in value:
                 if isinstance(item, dict):
                     for i in item:
-                        make_requests(i, item[i], level = next_level, requests = requests)
+                        make_requests(i, item[i], level = level + 1, requests = requests)
                 elif isinstance(item, str):
                     req = insert_text(text = item, style = '')
                     requests.append(req)
@@ -148,7 +166,7 @@ def main():
     for fl in range(len(doc_file_names)):
         time.sleep(6)
         # initialise the doc
-        title = doc_file_names[fl]
+        title = doc_file_names[fl].replace("_file_for_doc.json","")
         
         body = {
             "title": title,
@@ -165,7 +183,7 @@ def main():
         with open('../files/jsons_for_docs/' + doc_file_names[fl], encoding="utf8") as json_file:
             data = json.load(json_file)
     
-   
+        heading_1_dict = {}
         requests = []
         
         for i in data:
@@ -177,17 +195,54 @@ def main():
             documentId=DOCUMENT_ID, body={'requests': requests}).execute()
         print('Sent requests to document: {0}'.format(len(requests)))
 
+        # add hyperlinks to headings 1
+        hyper_requests = []
+        doc = doc_service.documents().get(documentId=DOCUMENT_ID).execute()
+        doc_content = doc.get('body').get('content')[2:]
+        for par in doc_content:
+            if par.get("paragraph").get("paragraphStyle").get("namedStyleType") == "HEADING_1":
+                head_name = par.get("paragraph").get("elements")[0].get("textRun").get("content").strip("\n")
+                heading_1_dict[head_name]["head_id"] = par.get("paragraph").get("paragraphStyle").get("headingId")
+
+      
+        for head,head_info in heading_1_dict.items():
+            for par in doc_content:
+                if (par.get("paragraph").get("paragraphStyle").get("namedStyleType") == "NORMAL_TEXT" and par.get("paragraph").get("elements")[0].get("textRun").get("content").startswith(head_info.get("key"))):
+                    start_index = par.get('startIndex')
+                    end_index = par.get('endIndex')
+                    hyper_requests.append(
+                        {"updateTextStyle":{
+                                "textStyle": {
+                                    "link": {"headingId":head_info.get("head_id") }
+                                },
+                                "fields": "link",
+                                "range": {
+                                    "startIndex": start_index,
+                                    "endIndex": end_index,
+                                }
+                            }
+
+                        }
+                    )
+
+
+        new_result = doc_service.documents().batchUpdate(
+            documentId=DOCUMENT_ID, body={'requests': hyper_requests}).execute()
+        print('Sent requests to document: {0}'.format(len(hyper_requests)))
+
+
+
         # move document to correct folder
         folder_id = parentapp_folder_id
         # Retrieve the existing parents to remove
         file = drive_service.files().get(fileId=DOCUMENT_ID,
-                                        fields='parents').execute()
+                                       fields='parents').execute()
         previous_parents = ",".join(file.get('parents'))
         # Move the file to the new folder
         file = drive_service.files().update(fileId=DOCUMENT_ID,
                                             addParents=folder_id,
-                                            removeParents=previous_parents,
-                                            fields='id, parents').execute()
+                                           removeParents=previous_parents,
+                                           fields='id, parents').execute()
 
 
 
