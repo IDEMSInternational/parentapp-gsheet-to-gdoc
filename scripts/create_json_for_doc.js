@@ -20,7 +20,7 @@ titles_obj.rows.forEach(title =>{
     }
 
 })
-//workshop_names = ["w_1on1"]
+
 
 workshop_names.forEach(workshop_name =>{
     console.log(workshop_name)
@@ -83,7 +83,7 @@ workshop_names.forEach(workshop_name =>{
     sheet_obj_subset.forEach(sheet => {
         var sheet_content = sheet.rows;
         var new_obj = {};
-        create_nested_json(sheet_content,new_obj,{},"",1);
+        create_nested_json(sheet_content,new_obj,1);
         doc_obj[sheet.flow_name] = new_obj;
     
     });
@@ -100,41 +100,42 @@ workshop_names.forEach(workshop_name =>{
 
 
 });
-    
-    
-        
-        
-
-
-
-            
-            
-            
-            
-    
-
-
-
-
-
 
 
 
 
 //////////////////////////////////////////////////////////////////////////
-function create_nested_json(curr_row_list,curr_dict,prev_dict,prev_key,lev){
+function create_nested_json(curr_row_list,curr_dict){
     for (var r=0; r<curr_row_list.length; r++){
         var row = curr_row_list[r];
+       
         if (row.hasOwnProperty('rows') && row.rows.length >0){
            curr_dict[row.name] = {};
-           create_nested_json(row.rows,curr_dict[row.name], curr_dict,row.name,lev+1)
+           create_nested_json(row.rows,curr_dict[row.name])
         } else{
-          curr_dict[row.name] = row.value;
+            if (row.hasOwnProperty('value')){
+                curr_dict[row.name] = row.value;
+            }else{
+                curr_dict[row.name] = "MISSING VALUE";
+            }
+          
         }
         
+        if (row.type == "template"){
+            var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == row.name))
+            if (template_sheet.length != 1){
+                console.log("no template found for " + row.name)
+            }else{
+                
+                curr_dict["template " + row.name] = {};
+                create_nested_json(template_sheet[0].rows,curr_dict["template " + row.name]);
+            }
+            
+        }
+        
+             
 
     }
-
 
 
 }
