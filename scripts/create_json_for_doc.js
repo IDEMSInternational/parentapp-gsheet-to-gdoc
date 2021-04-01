@@ -20,7 +20,7 @@ titles_obj.rows.forEach(title =>{
     }
 
 })
-/
+
 
 workshop_names.forEach(workshop_name =>{
     console.log(workshop_name)
