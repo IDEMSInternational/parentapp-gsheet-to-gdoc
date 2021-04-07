@@ -10,7 +10,24 @@ var json_string_names = fs.readFileSync(input_path_names).toString();
 var names_obj = JSON.parse(json_string_names);
 
 
-var excluded_templates = [];
+var excluded_templates = ["workshop_activity",    "welcome_together",
+"watch",
+"topic_intro",
+"listen",
+"essential_tool",
+"nav_buttons",
+"tools_activity",
+"relax",
+"suggestions",
+"think_temp",
+"home_practice",
+"care_together",
+"talk_together",
+"reflect_together",
+"read_temp",
+"read",
+"learn_temp",
+"ending"];
 var added_templates_obj = {};
 
 var workshop_names = [];
@@ -145,16 +162,16 @@ function create_nested_json(curr_row_list,curr_dict){
         }
         
         if (row.type == "template"){
-            var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == row.name))
+            var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == row.value))
             if (template_sheet.length != 1){
-                console.log("no template found for " + row.name)
-            }else if (!excluded_templates.includes(row.name)){
-                added_templates.push(row.name)
-               /* if (!added_templates.includes(row.name)){
-                    added_templates.push(row.name)
+                console.log("no template found for " + row.value + " in " + row.name)
+            }else if (!excluded_templates.includes(row.value)){
+                added_templates.push(row.value)
+               /* if (!added_templates.includes(row.value)){
+                    added_templates.push(row.value)
                 }*/
-                curr_dict["template: " + row.name] = {};
-                create_nested_json(template_sheet[0].rows,curr_dict["template: " + row.name]);
+                curr_dict["template: " + row.value] = {};
+                create_nested_json(template_sheet[0].rows,curr_dict["template: " + row.value]);
             }
             
         }else if (row.hasOwnProperty("action_list")){
@@ -163,7 +180,7 @@ function create_nested_json(curr_row_list,curr_dict){
                     action.args.forEach( template =>{
                         var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == template))
                         if (template_sheet.length != 1){
-                            console.log("no template found for " + row.name)
+                            console.log("no template " + template + "found for " + row.name)
                         }else{
                             curr_dict[ action.action_id + ": " + template] = {};
                             create_nested_json(template_sheet[0].rows,curr_dict[action.action_id + ": " + template]);

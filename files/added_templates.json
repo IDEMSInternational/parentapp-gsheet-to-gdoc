@@ -1,0 +1,61 @@
+{
+  "self_care": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "1on1": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "praise": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "instruct": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "stress": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "money": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "rules": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "consequence": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "solve": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "safe": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "crisis": [
+    "workshop_stepper",
+    "workshop_stepper",
+    "box_tools"
+  ],
+  "celebrate": [
+    "workshop_stepper",
+    "workshop_stepper"
+  ]
+}
