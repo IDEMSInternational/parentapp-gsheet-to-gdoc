@@ -10,6 +10,8 @@ var json_string_names = fs.readFileSync(input_path_names).toString();
 var names_obj = JSON.parse(json_string_names);
 
 
+var excluded_templates = [];
+var added_templates_obj = {};
 
 var workshop_names = [];
 var titles_obj = names_obj.filter(fl =>(fl.flow_name == "workshop_titles"))[0];
@@ -23,6 +25,7 @@ titles_obj.rows.forEach(title =>{
 
 
 workshop_names.forEach(workshop_name =>{
+    added_templates = [];
     console.log(workshop_name)
 
     let include_sheets = [];
@@ -87,6 +90,8 @@ workshop_names.forEach(workshop_name =>{
         doc_obj[sheet.flow_name] = new_obj;
     
     });
+
+    added_templates_obj[workshop_name.substring(2)] = added_templates;
     // write output
     if (Object.keys(doc_obj).length >0){
         doc_obj = JSON.stringify(doc_obj, null, 2);
@@ -101,22 +106,40 @@ workshop_names.forEach(workshop_name =>{
 
 });
 
+added_obj = JSON.stringify(added_templates_obj, null, 2);
+var output_path = path.join(__dirname, "../files/added_templates.json");
+fs.writeFile(output_path, added_obj, function (err, result) {
+    if (err) console.log('error', err);
+});
 
 
 
 //////////////////////////////////////////////////////////////////////////
 function create_nested_json(curr_row_list,curr_dict){
+    var curr_repeated_keys = {};
     for (var r=0; r<curr_row_list.length; r++){
         var row = curr_row_list[r];
+
+        if (curr_repeated_keys.hasOwnProperty(row.name)){
+            var new_key = row.name + " " + curr_repeated_keys[row.name];
+            curr_repeated_keys[row.name]++;
+        }else if (curr_dict.hasOwnProperty(row.name)){
+            curr_repeated_keys[row.name] = 2;
+            var new_key = row.name + " " + curr_repeated_keys[row.name];
+            curr_repeated_keys[row.name]++;
+        } else {
+            var new_key = row.name;
+        }
+
        
         if (row.hasOwnProperty('rows') && row.rows.length >0){
-           curr_dict[row.name] = {};
+           curr_dict[new_key] = {};
            create_nested_json(row.rows,curr_dict[row.name])
         } else{
             if (row.hasOwnProperty('value')){
-                curr_dict[row.name] = row.value;
+                curr_dict[new_key] = row.value;
             }else{
-                curr_dict[row.name] = "MISSING VALUE";
+                curr_dict[new_key] = "";
             }
           
         }
@@ -125,12 +148,29 @@ function create_nested_json(curr_row_list,curr_dict){
             var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == row.name))
             if (template_sheet.length != 1){
                 console.log("no template found for " + row.name)
-            }else{
-                
-                curr_dict["template " + row.name] = {};
-                create_nested_json(template_sheet[0].rows,curr_dict["template " + row.name]);
+            }else if (!excluded_templates.includes(row.name)){
+                added_templates.push(row.name)
+               /* if (!added_templates.includes(row.name)){
+                    added_templates.push(row.name)
+                }*/
+                curr_dict["template: " + row.name] = {};
+                create_nested_json(template_sheet[0].rows,curr_dict["template: " + row.name]);
             }
             
+        }else if (row.hasOwnProperty("action_list")){
+            row.action_list.forEach(action =>{
+                if (action.hasOwnProperty("action_id") && (action.action_id == "pop_up" || action.action_id == "go_to") ){
+                    action.args.forEach( template =>{
+                        var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == template))
+                        if (template_sheet.length != 1){
+                            console.log("no template found for " + row.name)
+                        }else{
+                            curr_dict[ action.action_id + ": " + template] = {};
+                            create_nested_json(template_sheet[0].rows,curr_dict[action.action_id + ": " + template]);
+                        }
+                    })
+                }
+            })
         }
         
              
