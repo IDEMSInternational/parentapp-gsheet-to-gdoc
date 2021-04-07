@@ -10,6 +10,7 @@ var json_string_names = fs.readFileSync(input_path_names).toString();
 var names_obj = JSON.parse(json_string_names);
 
 
+var excluded_templates = [];
 
 var workshop_names = [];
 var titles_obj = names_obj.filter(fl =>(fl.flow_name == "workshop_titles"))[0];
@@ -125,7 +126,7 @@ function create_nested_json(curr_row_list,curr_dict){
             var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == row.name))
             if (template_sheet.length != 1){
                 console.log("no template found for " + row.name)
-            }else{
+            }else if (!excluded_templates.includes(row.name)){
                 
                 curr_dict["template: " + row.name] = {};
                 create_nested_json(template_sheet[0].rows,curr_dict["template: " + row.name]);
