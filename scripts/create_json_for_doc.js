@@ -116,7 +116,7 @@ function create_nested_json(curr_row_list,curr_dict){
             if (row.hasOwnProperty('value')){
                 curr_dict[row.name] = row.value;
             }else{
-                curr_dict[row.name] = "MISSING VALUE";
+                curr_dict[row.name] = "";
             }
           
         }
@@ -127,10 +127,24 @@ function create_nested_json(curr_row_list,curr_dict){
                 console.log("no template found for " + row.name)
             }else{
                 
-                curr_dict["template " + row.name] = {};
-                create_nested_json(template_sheet[0].rows,curr_dict["template " + row.name]);
+                curr_dict["template: " + row.name] = {};
+                create_nested_json(template_sheet[0].rows,curr_dict["template: " + row.name]);
             }
             
+        }else if (row.hasOwnProperty("action_list")){
+            row.action_list.forEach(action =>{
+                if (action.hasOwnProperty("action_id") && (action.action_id == "pop_up" || action.action_id == "go_to") ){
+                    action.args.forEach( template =>{
+                        var template_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == template))
+                        if (template_sheet.length != 1){
+                            console.log("no template found for " + row.name)
+                        }else{
+                            curr_dict[ action.action_id + ": " + template] = {};
+                            create_nested_json(template_sheet[0].rows,curr_dict[action.action_id + ": " + template]);
+                        }
+                    })
+                }
+            })
         }
         
              
