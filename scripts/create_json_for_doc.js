@@ -11,6 +11,7 @@ var names_obj = JSON.parse(json_string_names);
 
 
 var excluded_templates = [];
+var added_templates_obj = {};
 
 var workshop_names = [];
 var titles_obj = names_obj.filter(fl =>(fl.flow_name == "workshop_titles"))[0];
@@ -24,6 +25,7 @@ titles_obj.rows.forEach(title =>{
 
 
 workshop_names.forEach(workshop_name =>{
+    added_templates = [];
     console.log(workshop_name)
 
     let include_sheets = [];
@@ -88,10 +90,12 @@ workshop_names.forEach(workshop_name =>{
         doc_obj[sheet.flow_name] = new_obj;
     
     });
+
+    added_templates_obj[workshop_name.substring(2)] = added_templates;
     // write output
     if (Object.keys(doc_obj).length >0){
         doc_obj = JSON.stringify(doc_obj, null, 2);
-        var output_path = path.join(__dirname, "../files/jsons_for_docs/" + workshop_name.substring(2) + "_file_for_doc.json");
+        var output_path = path.join(__dirname, "../files/" + workshop_name.substring(2) + "_file_for_doc.json");
         fs.writeFile(output_path, doc_obj, function (err, result) {
             if (err) console.log('error', err);
         });
@@ -102,6 +106,11 @@ workshop_names.forEach(workshop_name =>{
 
 });
 
+added_obj = JSON.stringify(added_templates_obj, null, 2);
+var output_path = path.join(__dirname, "../files/jsons_for_docs/added_templates.json");
+fs.writeFile(output_path, added_obj, function (err, result) {
+    if (err) console.log('error', err);
+});
 
 
 
@@ -127,7 +136,9 @@ function create_nested_json(curr_row_list,curr_dict){
             if (template_sheet.length != 1){
                 console.log("no template found for " + row.name)
             }else if (!excluded_templates.includes(row.name)){
-                
+                if (!added_templates.includes(row.name)){
+                    added_templates.push(row.name)
+                }
                 curr_dict["template: " + row.name] = {};
                 create_nested_json(template_sheet[0].rows,curr_dict["template: " + row.name]);
             }
