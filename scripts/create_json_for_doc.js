@@ -28,6 +28,7 @@ var excluded_templates = ["workshop_activity",    "welcome_together",
 "read",
 "learn_temp",
 "ending"];
+//var excluded_templates = [];
 var added_templates_obj = {};
 
 var workshop_names = [];
@@ -40,6 +41,7 @@ titles_obj.rows.forEach(title =>{
 
 })
 
+workshop_names = ["w_1on1"];
 
 workshop_names.forEach(workshop_name =>{
     added_templates = [];
@@ -52,52 +54,43 @@ workshop_names.forEach(workshop_name =>{
     }else{
         curr_stepper_sheet = curr_stepper_sheet[0];
         var stepper_rows = curr_stepper_sheet.rows.filter(row => row.value == "workshop_stepper");
-        
-        stepper_rows.forEach(s_row =>{
-            var local_include_sheets = []
-            let nav_row = s_row.rows.filter(row => (row.name == "nav_template_list"));
-            
-            if (nav_row.length != 1){
+        if (stepper_rows.length != 1){
+            console.log("multiple stepper rows for " + workshop_name)
+        }else{
+            s_row = stepper_rows[0];
+            let nav_rows = s_row.rows.filter(row => (row.name == "nav_template_list"));
+            if (nav_rows.length == 0){
                 console.log("no nav template list for " + workshop_name)
-            }else{
-                nav_row = nav_row[0];
-                
-                if (nav_row.hasOwnProperty("value")){
-                    include_sheets.push(workshop_name +"_stepper");
-                    local_include_sheets.push(workshop_name +"_stepper");
-                    
-                    /*
-                    let nav_list = nav_row.value.split(";");
-                    nav_list.forEach(w_name => {
-                        let tidy_name = w_name.substring(w_name.indexOf( workshop_name + "_"));
-                        include_sheets.push(tidy_name); 
-                        local_include_sheets.push(tidy_name);    
-                    }); 
-                    */
-                    let nav_list = nav_row.value;
-                    nav_list.forEach(w_name => {
-                        include_sheets.push(w_name); 
-                        local_include_sheets.push(w_name);    
-                    }); 
-
-
-                    include_sheets.push(workshop_name +"_tools");
-                    local_include_sheets.push(workshop_name +"_tools");
-                    //replace navigation list
-                    nav_row.value ="";
-                    local_include_sheets.forEach(ws =>{
-                        nav_row.value = nav_row.value + ws + ";\n"
-                    });
-                    nav_row.value = nav_row.value.substring(0,nav_row.value.length -2);
-
-
-                }else{
-                    console.log("no value in nav template list for " + workshop_name)
-                }
+            } else {
+                nav_rows.forEach(nav_row=>{
+                    var local_include_sheets = [];
+                    if (nav_row.hasOwnProperty("value")){
+                        include_sheets.push(workshop_name +"_stepper");
+                        local_include_sheets.push(workshop_name +"_stepper");
+                        
+                        let nav_list = nav_row.value;
+                        nav_list.forEach(w_name => {
+                            include_sheets.push(w_name); 
+                            local_include_sheets.push(w_name);    
+                        }); 
+                        include_sheets.push(workshop_name +"_tools");
+                        local_include_sheets.push(workshop_name +"_tools");
+                        //replace navigation list
+                        nav_row.value ="";
+                        local_include_sheets.forEach(ws =>{
+                            nav_row.value = nav_row.value + ws + ";\n"
+                        });
+                        nav_row.value = nav_row.value.substring(0,nav_row.value.length -2);
+                        
+                    }
+                });
             }
-
-        });
+        }
     }
+
+
+
+
     var doc_obj = {};
     var sheet_obj_subset = sheet_obj.filter(sheet => (include_sheets.includes(sheet.flow_name)))
     sheet_obj_subset.forEach(sheet => {
@@ -117,9 +110,6 @@ workshop_names.forEach(workshop_name =>{
             if (err) console.log('error', err);
         });
     }
-    
-
-
 
 });
 
@@ -128,6 +118,7 @@ var output_path = path.join(__dirname, "../files/added_templates.json");
 fs.writeFile(output_path, added_obj, function (err, result) {
     if (err) console.log('error', err);
 });
+
 
 
 
