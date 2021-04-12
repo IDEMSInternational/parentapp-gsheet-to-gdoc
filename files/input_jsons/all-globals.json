@@ -341,7 +341,8 @@
       {
         "type": "declare_global_constant",
         "name": "w_instruct_short",
-        "value": "Positive Instructions"
+        "value": "Positive Instructions",
+        "comments": "individual done"
       },
       {
         "type": "declare_global_constant",
@@ -352,7 +353,8 @@
       {
         "type": "declare_global_constant",
         "name": "w_stress_short",
-        "value": "Managing Stress"
+        "value": "Managing Stress",
+        "comments": "individual done"
       },
       {
         "type": "declare_global_constant",
@@ -782,12 +784,12 @@
       {
         "type": "declare_global_constant",
         "name": "together",
-        "value": "Together with others"
+        "value": "Group"
       },
       {
         "type": "declare_global_constant",
         "name": "individual",
-        "value": "On my own"
+        "value": "Me"
       },
       {
         "type": "declare_field_default",

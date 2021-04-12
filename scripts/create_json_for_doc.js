@@ -27,6 +27,11 @@ var excluded_templates = ["workshop_activity",    "welcome_together",
 "read_temp",
 "read",
 "learn_temp",
+"welcome_individual",
+"question_time",
+"box_tools",
+"reflect_individual",
+"try_together",
 "ending"];
 //var excluded_templates = [];
 var added_templates_obj = {};
@@ -40,8 +45,6 @@ titles_obj.rows.forEach(title =>{
     }
 
 })
-
-workshop_names = ["w_1on1"];
 
 workshop_names.forEach(workshop_name =>{
     added_templates = [];
