@@ -30,54 +30,74 @@ var excluded_templates = ["workshop_activity",    "welcome_together",
 "welcome_individual",
 "question_time",
 "box_tools",
+"suggestions_ticks",
+"box_image",
+"survey_stepper",
+"box_slider_week_temp",
+"box_multi_3_temp",
+"box_slider_week_temp",
+"box_multi_4_temp",
+"box_slider_confidence_temp",
+"box_slider_week_temp",
 "reflect_individual",
+"workshop_stepper",
 "try_together",
+"box_slider_month_temp",
 "ending"];
 //var excluded_templates = [];
 var added_templates_obj = {};
 
-var workshop_names = [];
+var template_names_to_process = [];
 var titles_obj = names_obj.filter(fl =>(fl.flow_name == "workshop_titles"))[0];
 
 titles_obj.rows.forEach(title =>{
     if (!title.name.endsWith("short") ){
-        workshop_names.push(title.name)
+        template_names_to_process.push(title.name)
     }
-
 })
 
-workshop_names.forEach(workshop_name =>{
+template_names_to_process.push("survey_welcome");
+
+template_names_to_process.push("workshop_setup");
+
+template_names_to_process.forEach(template_name =>{
     added_templates = [];
-    console.log(workshop_name)
+    console.log(template_name)
 
     let include_sheets = [];
-    var curr_stepper_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == workshop_name + "_stepper"));
+    var curr_stepper_sheet = sheet_obj.filter(sheet =>(sheet.flow_name == template_name + "_stepper"));
     if (curr_stepper_sheet.length ==0){
-        console.log("no stepper sheet for " + workshop_name)
+        console.log("no stepper sheet for " + template_name)
     }else{
         curr_stepper_sheet = curr_stepper_sheet[0];
-        var stepper_rows = curr_stepper_sheet.rows.filter(row => row.value == "workshop_stepper");
+        var workshop_stepper_rows = curr_stepper_sheet.rows.filter(row => row.value == "workshop_stepper");
+        var survey_stepper_rows = curr_stepper_sheet.rows.filter(row => row.value == "survey_stepper");
+        if (workshop_stepper_rows.length>survey_stepper_rows.length) {
+            var stepper_rows = workshop_stepper_rows
+        } else {
+            var stepper_rows = survey_stepper_rows
+        };
         if (stepper_rows.length != 1){
-            console.log("multiple stepper rows for " + workshop_name)
+            console.log("multiple stepper rows for " + template_name)
         }else{
             s_row = stepper_rows[0];
             let nav_rows = s_row.rows.filter(row => (row.name == "nav_template_list"));
             if (nav_rows.length == 0){
-                console.log("no nav template list for " + workshop_name)
+                console.log("no nav template list for " + template_name)
             } else {
                 nav_rows.forEach(nav_row=>{
                     var local_include_sheets = [];
                     if (nav_row.hasOwnProperty("value")){
-                        include_sheets.push(workshop_name +"_stepper");
-                        local_include_sheets.push(workshop_name +"_stepper");
+                        include_sheets.push(template_name +"_stepper");
+                        local_include_sheets.push(template_name +"_stepper");
                         
                         let nav_list = nav_row.value;
                         nav_list.forEach(w_name => {
                             include_sheets.push(w_name); 
                             local_include_sheets.push(w_name);    
                         }); 
-                        include_sheets.push(workshop_name +"_tools");
-                        local_include_sheets.push(workshop_name +"_tools");
+                        include_sheets.push(template_name +"_tools");
+                        local_include_sheets.push(template_name +"_tools");
                         //replace navigation list
                         nav_row.value ="";
                         local_include_sheets.forEach(ws =>{
@@ -104,11 +124,11 @@ workshop_names.forEach(workshop_name =>{
     
     });
 
-    added_templates_obj[workshop_name.substring(2)] = added_templates;
+    added_templates_obj[template_name.substring(2)] = added_templates;
     // write output
     if (Object.keys(doc_obj).length >0){
         doc_obj = JSON.stringify(doc_obj, null, 2);
-        var output_path = path.join(__dirname, "../files/jsons_for_docs/" + workshop_name.substring(2) + "_file_for_doc.json");
+        var output_path = path.join(__dirname, "../files/jsons_for_docs/" + template_name.substring(2) + "_file_for_doc.json");
         fs.writeFile(output_path, doc_obj, function (err, result) {
             if (err) console.log('error', err);
         });
