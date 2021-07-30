@@ -225,10 +225,10 @@ def main():
                         }
                     )
 
-
-        new_result = doc_service.documents().batchUpdate(
-            documentId=DOCUMENT_ID, body={'requests': hyper_requests}).execute()
-        print('Sent requests to document: {0}'.format(len(hyper_requests)))
+        if len(hyper_requests)>0:
+            new_result = doc_service.documents().batchUpdate(
+                documentId=DOCUMENT_ID, body={'requests': hyper_requests}).execute()
+            print('Sent requests to document: {0}'.format(len(hyper_requests)))
 
 
 
