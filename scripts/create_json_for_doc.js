@@ -63,7 +63,13 @@ var excluded_templates = ["workshop_activity",
     "box_parent_point_counter",
     "home_practice_challenges",
     "ending",
-    "tool_tile"];
+    "tool_tile",
+    "new_benchmarks",
+    "parent_point_tile", 
+    "parent_point_tiles",
+    "library_activity",
+    "banner",
+    "parenting_tips_reply"];
 //var excluded_templates = [];
 var added_templates_obj = {};
 
@@ -119,6 +125,8 @@ template_names_to_process.push("w_crisis_hp_challenges");
 template_names_to_process.push("");
 
 template_names_to_process.push("parent_centre");
+
+template_names_to_process.push("parenting_tips_content");
 
 template_names_to_process.forEach(template_name => {
     added_templates = [];
